@@ -22,15 +22,32 @@ public class SellOneItemTest {
         itemScanned(barcode);
     }
 
+    @Test
+    public void displayPriceNotFound() {
+        String barcode = "12345";
+        pricesByBarcode = Collections.emptyMap();
+        context.checking(new Expectations() {{
+            oneOf(display).displayPriceNotFound();
+        }});
+
+        itemScanned(barcode);
+    }
+
     private Map<String, BigDecimal> pricesByBarcode;
     private Display display = context.mock(Display.class);
 
     private void itemScanned(String barcode) {
         BigDecimal price = pricesByBarcode.get(barcode);
-        display.displayTotal(String.format("total: %s €", price));
+        if (price == null) {
+            display.displayPriceNotFound();
+        } else {
+            display.displayTotal(String.format("total: %s €", price));
+        }
     }
 
     public interface Display {
         void displayTotal(String total);
+
+        void displayPriceNotFound();
     }
 }
