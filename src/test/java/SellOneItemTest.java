@@ -27,7 +27,7 @@ public class SellOneItemTest {
         String barcode = "not-found";
         pricesByBarcode = Collections.emptyMap();
         context.checking(new Expectations() {{
-            oneOf(display).displayPriceNotFound();
+            oneOf(display).displayPriceNotFound("not found: not-found");
         }});
 
         itemScanned(barcode);
@@ -39,7 +39,7 @@ public class SellOneItemTest {
     private void itemScanned(String barcode) {
         BigDecimal price = pricesByBarcode.get(barcode);
         if (price == null) {
-            display.displayPriceNotFound();
+            display.displayPriceNotFound(String.format("not found: %s", barcode));
         } else {
             display.displayTotal(String.format("total: %s €", price));
         }
@@ -48,6 +48,6 @@ public class SellOneItemTest {
     public interface Display {
         void displayTotal(String total);
 
-        void displayPriceNotFound();
+        void displayPriceNotFound(String notFound);
     }
 }
