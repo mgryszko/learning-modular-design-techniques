@@ -3,6 +3,9 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,7 +15,7 @@ public class SellOneItemTest {
         String barcode = "found";
         pricesByBarcode = createPricesByBarcodesWith(barcode, Price.euros(10));
         context.checking(new Expectations() {{
-            oneOf(display).displayTotal("total: 10.0 €");
+            oneOf(display).displayTotal("total: 10.00 €");
         }});
 
         itemScanned(barcode);
@@ -95,7 +98,8 @@ public class SellOneItemTest {
 
         @Override
         public String toString() {
-            return String.format("%d.%d €", valueInCents / CENTS_IN_EUR, valueInCents - (valueInCents / CENTS_IN_EUR) * CENTS_IN_EUR);
+            BigDecimal valueToFormat = new BigDecimal(BigInteger.valueOf(valueInCents), 2);
+            return new DecimalFormat("#####.00 €").format(valueToFormat);
         }
     }
 }
