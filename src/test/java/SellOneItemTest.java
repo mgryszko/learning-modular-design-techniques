@@ -3,7 +3,6 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
 import org.junit.Test;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +10,7 @@ public class SellOneItemTest {
     @Test
     public void displayTotalWhenPriceFound() {
         String barcode = "found";
-        pricesByBarcode = createPricesByBarcodesWith(barcode, new BigDecimal(10));
+        pricesByBarcode = createPricesByBarcodesWith(barcode, Price.euros(10));
         context.checking(new Expectations() {{
             oneOf(display).displayTotal("total: 10 €");
         }});
@@ -33,30 +32,30 @@ public class SellOneItemTest {
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
 
-    private Map<String, BigDecimal> createPricesByBarcodesWith(String barcode, BigDecimal price) {
-        Map<String, BigDecimal> pricesByBarcodes = new HashMap<>();
+    private Map<String, Price> createPricesByBarcodesWith(String barcode, Price price) {
+        Map<String, Price> pricesByBarcodes = new HashMap<>();
         pricesByBarcodes.put(barcode, price);
         pricesByBarcodes.put("other-than-" + barcode, price);
         pricesByBarcodes.put("yet-other-than-" + barcode, price);
         return pricesByBarcodes;
     }
 
-    private Map<String, BigDecimal> createPriceCatalogWithout(String barcode) {
-        Map<String, BigDecimal> pricesByBarcodes = new HashMap<>();
-        pricesByBarcodes.put("other-than-" + barcode, new BigDecimal(1));
-        pricesByBarcodes.put("yet-other-than-" + barcode, new BigDecimal(2));
+    private Map<String, Price> createPriceCatalogWithout(String barcode) {
+        Map<String, Price> pricesByBarcodes = new HashMap<>();
+        pricesByBarcodes.put("other-than-" + barcode, Price.euros(1));
+        pricesByBarcodes.put("yet-other-than-" + barcode, Price.euros(2));
         return pricesByBarcodes;
     }
 
-    private Map<String, BigDecimal> pricesByBarcode;
+    private Map<String, Price> pricesByBarcode;
     private Display display = context.mock(Display.class);
 
     private void itemScanned(String barcode) {
-        BigDecimal price = pricesByBarcode.get(barcode);
+        Price price = pricesByBarcode.get(barcode);
         if (price == null) {
             display.displayPriceNotFound(String.format("not found: %s", barcode));
         } else {
-            display.displayTotal(String.format("total: %s €", price));
+            display.displayTotal(String.format("total: %s", price));
         }
     }
 
@@ -64,5 +63,24 @@ public class SellOneItemTest {
         void displayTotal(String total);
 
         void displayPriceNotFound(String notFound);
+    }
+
+    private static class Price {
+        private static final int CENTS_IN_EUR = 100;
+
+        public static Price euros(int euros) {
+            return new Price(euros);
+        }
+
+        private final int valueInCents;
+
+        private Price(int euros) {
+            valueInCents = euros * CENTS_IN_EUR;
+        }
+
+        @Override
+        public String toString() {
+            return String.format("%d €", valueInCents / CENTS_IN_EUR);
+        }
     }
 }
