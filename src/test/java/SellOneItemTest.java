@@ -8,9 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SellOneItemTest {
-    @Rule
-    public JUnitRuleMockery context = new JUnitRuleMockery();
-
     @Test
     public void displayTotalWhenPriceFound() {
         String barcode = "found";
@@ -32,6 +29,9 @@ public class SellOneItemTest {
 
         itemScanned(barcode);
     }
+
+    @Rule
+    public JUnitRuleMockery context = new JUnitRuleMockery();
 
     private Map<String, BigDecimal> createPricesByBarcodesWith(String barcode, BigDecimal price) {
         Map<String, BigDecimal> pricesByBarcodes = new HashMap<>();
