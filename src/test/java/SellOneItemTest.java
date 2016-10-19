@@ -13,7 +13,7 @@ public class SellOneItemTest {
 
     @Test
     public void displayTotalWhenPriceFound() {
-        String barcode = "12345";
+        String barcode = "found";
         pricesByBarcode = Collections.singletonMap(barcode, new BigDecimal(10));
         context.checking(new Expectations() {{
             oneOf(display).displayTotal("total: 10 €");
@@ -24,7 +24,7 @@ public class SellOneItemTest {
 
     @Test
     public void displayPriceNotFound() {
-        String barcode = "12345";
+        String barcode = "not-found";
         pricesByBarcode = Collections.emptyMap();
         context.checking(new Expectations() {{
             oneOf(display).displayPriceNotFound();
