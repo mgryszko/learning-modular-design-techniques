@@ -4,7 +4,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 public class SellOneItemTest {
@@ -14,7 +14,7 @@ public class SellOneItemTest {
     @Test
     public void displayTotalWhenPriceFound() {
         String barcode = "found";
-        pricesByBarcode = Collections.singletonMap(barcode, new BigDecimal(10));
+        pricesByBarcode = createPricesByBarcodesWith(barcode, new BigDecimal(10));
         context.checking(new Expectations() {{
             oneOf(display).displayTotal("total: 10 €");
         }});
@@ -25,12 +25,27 @@ public class SellOneItemTest {
     @Test
     public void displayPriceNotFound() {
         String barcode = "not-found";
-        pricesByBarcode = Collections.emptyMap();
+        pricesByBarcode = createPriceCatalogWithout(barcode);
         context.checking(new Expectations() {{
             oneOf(display).displayPriceNotFound("not found: not-found");
         }});
 
         itemScanned(barcode);
+    }
+
+    private Map<String, BigDecimal> createPricesByBarcodesWith(String barcode, BigDecimal price) {
+        Map<String, BigDecimal> pricesByBarcodes = new HashMap<>();
+        pricesByBarcodes.put(barcode, price);
+        pricesByBarcodes.put("other-than-" + barcode, price);
+        pricesByBarcodes.put("yet-other-than-" + barcode, price);
+        return pricesByBarcodes;
+    }
+
+    private Map<String, BigDecimal> createPriceCatalogWithout(String barcode) {
+        Map<String, BigDecimal> pricesByBarcodes = new HashMap<>();
+        pricesByBarcodes.put("other-than-" + barcode, new BigDecimal(1));
+        pricesByBarcodes.put("yet-other-than-" + barcode, new BigDecimal(2));
+        return pricesByBarcodes;
     }
 
     private Map<String, BigDecimal> pricesByBarcode;
