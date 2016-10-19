@@ -8,11 +8,22 @@ import java.util.Map;
 
 public class SellOneItemTest {
     @Test
-    public void displayTotalWhenPriceFound() {
+    public void displayTotalWhenRoundPriceFound() {
         String barcode = "found";
         pricesByBarcode = createPricesByBarcodesWith(barcode, Price.euros(10));
         context.checking(new Expectations() {{
-            oneOf(display).displayTotal("total: 10 €");
+            oneOf(display).displayTotal("total: 10.0 €");
+        }});
+
+        itemScanned(barcode);
+    }
+
+    @Test
+    public void displayTotalWhenPriceWithDecimalsFound() {
+        String barcode = "found";
+        pricesByBarcode = createPricesByBarcodesWith(barcode, Price.euros(10, 13));
+        context.checking(new Expectations() {{
+            oneOf(display).displayTotal("total: 10.13 €");
         }});
 
         itemScanned(barcode);
@@ -69,18 +80,22 @@ public class SellOneItemTest {
         private static final int CENTS_IN_EUR = 100;
 
         public static Price euros(int euros) {
-            return new Price(euros);
+            return Price.euros(euros, 0);
+        }
+
+        public static Price euros(int euros, int cents) {
+            return new Price(euros, cents);
         }
 
         private final int valueInCents;
 
-        private Price(int euros) {
-            valueInCents = euros * CENTS_IN_EUR;
+        private Price(int euros, int cents) {
+            valueInCents = euros * CENTS_IN_EUR + cents;
         }
 
         @Override
         public String toString() {
-            return String.format("%d €", valueInCents / CENTS_IN_EUR);
+            return String.format("%d.%d €", valueInCents / CENTS_IN_EUR, valueInCents - (valueInCents / CENTS_IN_EUR) * CENTS_IN_EUR);
         }
     }
 }
