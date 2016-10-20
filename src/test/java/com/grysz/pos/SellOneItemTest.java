@@ -12,20 +12,10 @@ public class SellOneItemTest {
     @Test
     public void displayTotalWhenRoundPriceFound() {
         String barcode = "found";
-        Map<String, Price> pricesByBarcode = createPricesByBarcodesWith(barcode, Price.euros(10));
+        Price price = Price.euros(10);
+        Map<String, Price> pricesByBarcode = createPricesByBarcodesWith(barcode, price);
         context.checking(new Expectations() {{
-            oneOf(display).displayTotal("total: 10.00 €");
-        }});
-
-        new SellOneItem(pricesByBarcode, display).itemScanned(barcode);
-    }
-
-    @Test
-    public void displayTotalWhenPriceWithDecimalsFound() {
-        String barcode = "found";
-        Map<String, Price> pricesByBarcode = createPricesByBarcodesWith(barcode, Price.euros(10, 13));
-        context.checking(new Expectations() {{
-            oneOf(display).displayTotal("total: 10.13 €");
+            oneOf(display).displayTotal(price);
         }});
 
         new SellOneItem(pricesByBarcode, display).itemScanned(barcode);
@@ -36,7 +26,7 @@ public class SellOneItemTest {
         String barcode = "not-found";
         Map<String, Price> pricesByBarcode = createPriceCatalogWithout(barcode);
         context.checking(new Expectations() {{
-            oneOf(display).displayPriceNotFound("not found: not-found");
+            oneOf(display).displayPriceNotFound("not-found");
         }});
 
         new SellOneItem(pricesByBarcode, display).itemScanned(barcode);

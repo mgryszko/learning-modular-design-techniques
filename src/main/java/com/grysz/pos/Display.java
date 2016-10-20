@@ -1,7 +1,7 @@
 package com.grysz.pos;
 
 public interface Display {
-    void displayTotal(String total);
+    void displayTotal(Price total);
 
     void displayPriceNotFound(String notFound);
 }

@@ -14,9 +14,9 @@ public class SellOneItem {
     public void itemScanned(String barcode) {
         Price price = pricesByBarcode.get(barcode);
         if (price == null) {
-            display.displayPriceNotFound(String.format("not found: %s", barcode));
+            display.displayPriceNotFound(barcode);
         } else {
-            display.displayTotal(String.format("total: %s", price));
+            display.displayTotal(price);
         }
     }
 }
