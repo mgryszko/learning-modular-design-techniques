@@ -7,7 +7,7 @@ import org.junit.Test;
 
 public class SellOneItemTest {
     @Test
-    public void displayTotalWhenRoundPriceFound() {
+    public void displayTotalWhenPriceFound() {
         String barcode = "found";
         Price price = Price.euros(10);
         context.checking(new Expectations() {{
