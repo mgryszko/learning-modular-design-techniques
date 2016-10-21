@@ -23,9 +23,9 @@ public class SellMultipleItemsTest {
             oneOf(display).displayTotal(Price.euros(30));
         }});
 
-        useCase.itemScanned(barcode1);
-        useCase.itemScanned(barcode2);
-        useCase.done();
+        pos.itemScanned(barcode1);
+        pos.itemScanned(barcode2);
+        pos.done();
     }
 
     @Test
@@ -37,7 +37,7 @@ public class SellMultipleItemsTest {
             oneOf(display).displayPriceNotFound("not-found");
         }});
 
-        useCase.itemScanned(barcode);
+        pos.itemScanned(barcode);
     }
 
     @Rule
@@ -45,5 +45,5 @@ public class SellMultipleItemsTest {
 
     private Display display = context.mock(Display.class);
     private ProductCatalog productCatalog = context.mock(ProductCatalog.class);
-    private Pos useCase = new Pos(productCatalog, display);
+    private Pos pos = new Pos(productCatalog, display);
 }
