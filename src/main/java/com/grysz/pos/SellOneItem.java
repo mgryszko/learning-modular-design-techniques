@@ -1,18 +1,16 @@
 package com.grysz.pos;
 
-import java.util.Map;
-
 public class SellOneItem {
-    private final Map<String, Price> pricesByBarcode;
     private final Display display;
+    private final ProductCatalog productCatalog;
 
-    public SellOneItem(Map<String, Price> pricesByBarcode, Display display) {
-        this.pricesByBarcode = pricesByBarcode;
+    public SellOneItem(ProductCatalog productCatalog, Display display) {
+        this.productCatalog = productCatalog;
         this.display = display;
     }
 
     public void itemScanned(String barcode) {
-        Price price = pricesByBarcode.get(barcode);
+        Price price = productCatalog.find(barcode);
         if (price == null) {
             display.displayPriceNotFound(barcode);
         } else {
