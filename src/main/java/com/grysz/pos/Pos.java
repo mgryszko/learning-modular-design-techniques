@@ -1,12 +1,13 @@
 package com.grysz.pos;
 
 public class Pos {
-    private final Display display;
     private final ProductCatalog productCatalog;
-    private Price total = Price.euros(0);
+    private final ShoppingCart shoppingCart;
+    private final Display display;
 
-    public Pos(ProductCatalog productCatalog, Display display) {
+    public Pos(ProductCatalog productCatalog, ShoppingCart shoppingCart, Display display) {
         this.productCatalog = productCatalog;
+        this.shoppingCart = shoppingCart;
         this.display = display;
     }
 
@@ -26,11 +27,11 @@ public class Pos {
             display.displayPriceNotFound(barcode);
         } else {
             display.displayProductPrice(price);
-            total = total.add(price);
+            shoppingCart.put(price);
         }
     }
 
     public void done() {
-        display.displayTotal(total);
+        display.displayTotal(shoppingCart.getTotal());
     }
 }
