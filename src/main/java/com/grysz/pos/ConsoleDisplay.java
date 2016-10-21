@@ -17,6 +17,11 @@ public class ConsoleDisplay implements Display {
         console.println(formatPriceNotFound(barcode));
     }
 
+    @Override
+    public void displayProductPrice(Price price) {
+        throw new RuntimeException("not implemented yet");
+    }
+
     private String formatTotal(Price total) {
         return String.format("total: %s", total);
     }

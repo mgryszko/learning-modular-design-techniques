@@ -7,16 +7,18 @@ import org.junit.Test;
 
 public class SellOneItemTest {
     @Test
-    public void displayTotalWhenPriceFound() {
+    public void displayProductPriceAndTotalWhenPriceFound() {
         String barcode = "found";
         Price price = Price.euros(10);
         context.checking(new Expectations() {{
             allowing(productCatalog).find(barcode);
             will(returnValue(price));
+
+            oneOf(display).displayProductPrice(price);
             oneOf(display).displayTotal(price);
         }});
 
-        useCase.itemScanned(barcode);
+        useCase.itemScannedAndDone(barcode);
     }
 
     @Test
@@ -28,7 +30,7 @@ public class SellOneItemTest {
             oneOf(display).displayPriceNotFound("not-found");
         }});
 
-        useCase.itemScanned(barcode);
+        useCase.itemScannedAndDone(barcode);
     }
 
     @Rule
