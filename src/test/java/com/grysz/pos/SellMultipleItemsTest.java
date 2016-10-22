@@ -8,7 +8,7 @@ import org.junit.Test;
 public class SellMultipleItemsTest {
     @Test
     public void scanProductAndDisplayPrice() {
-        String barcode = "12345";
+        String barcode = "found";
         Price price = Price.euros(10);
         context.checking(new Expectations() {{
             allowing(productCatalog).find(barcode);
