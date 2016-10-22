@@ -22,9 +22,25 @@ public class Price {
         valueInCents = euros * CENTS_IN_EUR + cents;
     }
 
+    public Price add(Price that) {
+        return Price.euros(0, this.valueInCents + that.valueInCents);
+    }
+
     @Override
     public String toString() {
         BigDecimal valueToFormat = new BigDecimal(BigInteger.valueOf(valueInCents), 2);
         return new DecimalFormat("#####.00 €").format(valueToFormat);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        return valueInCents == ((Price) o).valueInCents;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(valueInCents);
     }
 }
