@@ -11,7 +11,7 @@ public class Pos {
         this.display = display;
     }
 
-    public void itemScanned(String barcode) {
+    public void productScanned(String barcode) {
         Price price = productCatalog.find(barcode);
         if (price == null) {
             display.displayPriceNotFound(barcode);

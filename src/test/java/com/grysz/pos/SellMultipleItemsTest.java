@@ -1,7 +1,6 @@
 package com.grysz.pos;
 
 import org.jmock.Expectations;
-import org.jmock.States;
 import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
 import org.junit.Test;
@@ -19,11 +18,11 @@ public class SellMultipleItemsTest {
             oneOf(display).displayProductPrice(price);
         }});
 
-        pos.itemScanned(barcode);
+        pos.productScanned(barcode);
     }
 
     @Test
-    public void scanItemAndDisplayPriceNotFound() {
+    public void scanProductAndDisplayPriceNotFound() {
         String barcode = "not-found";
         context.checking(new Expectations() {{
             allowing(productCatalog).find(barcode);
@@ -31,7 +30,7 @@ public class SellMultipleItemsTest {
             oneOf(display).displayPriceNotFound("not-found");
         }});
 
-        pos.itemScanned(barcode);
+        pos.productScanned(barcode);
     }
 
     @Test
