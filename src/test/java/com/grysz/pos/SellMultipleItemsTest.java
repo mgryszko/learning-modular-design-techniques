@@ -8,34 +8,18 @@ import org.junit.Test;
 
 public class SellMultipleItemsTest {
     @Test
-    public void scanMultipleItemsAndDisplayTotal() {
-        String barcode1 = "12345";
-        String barcode2 = "23456";
-        Price price1 = Price.euros(10);
-        Price price2 = Price.euros(20);
-        final States shoppingCartStates = context.states("shoppingCart").startsAs("empty");
+    public void scanProductAndDisplayPrice() {
+        String barcode = "12345";
+        Price price = Price.euros(10);
         context.checking(new Expectations() {{
-            allowing(productCatalog).find(barcode1);
-            will(returnValue(price1));
-            oneOf(shoppingCart).put(price1);
+            allowing(productCatalog).find(barcode);
+            will(returnValue(price));
 
-            allowing(productCatalog).find(barcode2);
-            will(returnValue(price2));
-            oneOf(shoppingCart).put(price2);
-            then(shoppingCartStates.is("full"));
-
-            allowing(shoppingCart).getTotal();
-            will(returnValue(Price.euros(30)));
-            when(shoppingCartStates.is("full"));
-
-            oneOf(display).displayProductPrice(price1);
-            oneOf(display).displayProductPrice(price2);
-            oneOf(display).displayTotal(Price.euros(30));
+            oneOf(shoppingCart).put(price);
+            oneOf(display).displayProductPrice(price);
         }});
 
-        pos.itemScanned(barcode1);
-        pos.itemScanned(barcode2);
-        pos.done();
+        pos.itemScanned(barcode);
     }
 
     @Test
@@ -48,6 +32,19 @@ public class SellMultipleItemsTest {
         }});
 
         pos.itemScanned(barcode);
+    }
+
+    @Test
+    public void finishScanningAndDisplayTotal() {
+        Price price = Price.euros(10);
+        context.checking(new Expectations() {{
+            allowing(shoppingCart).getTotal();
+            will(returnValue(price));
+
+            oneOf(display).displayTotal(price);
+        }});
+
+        pos.done();
     }
 
     @Rule
