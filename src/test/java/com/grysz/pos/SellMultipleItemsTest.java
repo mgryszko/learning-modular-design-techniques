@@ -34,13 +34,14 @@ public class SellMultipleItemsTest {
     }
 
     @Test
-    public void finishScanningAndDisplayTotal() {
-        Price price = Price.euros(10);
+    public void finishScanningAndDisplayTotalWithGst() {
+        Price grossPrice = Price.euros(10);
+        Price netPrice = Price.euros(10, 50);
         context.checking(new Expectations() {{
             allowing(shoppingCart).getTotal();
-            will(returnValue(price));
+            will(returnValue(grossPrice));
 
-            oneOf(display).displayTotal(price);
+            oneOf(display).displayTotal(netPrice);
         }});
 
         pos.done();

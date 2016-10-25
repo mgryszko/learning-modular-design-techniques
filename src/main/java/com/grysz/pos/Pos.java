@@ -22,6 +22,9 @@ public class Pos {
     }
 
     public void done() {
-        display.displayTotal(shoppingCart.getTotal());
+        Price grossTotal = shoppingCart.getTotal();
+        Price gst = grossTotal.percent(5);
+        Price netTotal = grossTotal.add(gst);
+        display.displayTotal(netTotal);
     }
 }

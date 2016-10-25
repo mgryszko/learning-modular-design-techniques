@@ -43,4 +43,8 @@ public class Price {
     public int hashCode() {
         return Objects.hash(valueInCents);
     }
+
+    public Price percent(int percent) {
+        return Price.euros(0, valueInCents * percent / 100);
+    }
 }
