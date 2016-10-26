@@ -30,7 +30,7 @@ public class Price {
 
     @Override
     public String toString() {
-        return new DecimalFormat("#####.00 €").format(amount);
+        return new DecimalFormat("####0.00 €").format(amount);
     }
 
     @Override
