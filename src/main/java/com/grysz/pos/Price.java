@@ -1,11 +1,10 @@
 package com.grysz.pos;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.DecimalFormat;
 
 public class Price {
-    private static final BigDecimal CENTS_IN_EUR = BigDecimal.valueOf(100);
-
     public static Price cents(int cents) {
         return new Price(cents);
     }
@@ -13,7 +12,7 @@ public class Price {
     private final BigDecimal amount;
 
     private Price(int cents) {
-        amount = BigDecimal.valueOf(cents).divide(CENTS_IN_EUR);
+        amount = new BigDecimal(BigInteger.valueOf(cents), 2);
     }
 
     private Price(BigDecimal amount) {
