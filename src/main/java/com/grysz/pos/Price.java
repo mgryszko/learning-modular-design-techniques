@@ -6,8 +6,8 @@ import java.text.DecimalFormat;
 public class Price {
     private static final BigDecimal CENTS_IN_EUR = BigDecimal.valueOf(100);
 
-    public static Price euros(int euros) {
-        return new Price(euros, 0);
+    public static Price cents(int cents) {
+        return new Price(0, cents);
     }
 
     public static Price euros(int euros, int cents) {

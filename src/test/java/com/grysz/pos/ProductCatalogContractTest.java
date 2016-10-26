@@ -8,7 +8,7 @@ import static org.junit.Assert.assertThat;
 public abstract class ProductCatalogContractTest {
     private String foundBarcode = "found";
     private String notFoundBarcode = "not-found";
-    private Price foundPrice = Price.euros(10);
+    private Price foundPrice = Price.cents(1000);
 
     @Test
     public void priceFound() {

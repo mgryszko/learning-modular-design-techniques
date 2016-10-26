@@ -22,8 +22,8 @@ public class InMemoryProductCatalogTest extends ProductCatalogContractTest {
 
     private Map<String, Price> pricesByBarcodeWithout(String barcode) {
         Map<String, Price> pricesByBarcodes = new HashMap<>();
-        pricesByBarcodes.put("other-than-" + barcode, Price.euros(1));
-        pricesByBarcodes.put("yet-other-than-" + barcode, Price.euros(2));
+        pricesByBarcodes.put("other-than-" + barcode, Price.cents(100));
+        pricesByBarcodes.put("yet-other-than-" + barcode, Price.cents(200));
         return pricesByBarcodes;
     }
 }

@@ -10,7 +10,7 @@ public abstract class ShoppingCartContractTest {
     public void initiallyIsEmpty() {
         ShoppingCart cart = createEmptyShoppingCart();
 
-        assertThat(cart.getTotal(), equalTo(Price.euros(0)));
+        assertThat(cart.getTotal(), equalTo(Price.cents(0)));
     }
 
     @Test

@@ -9,7 +9,7 @@ public class SellMultipleItemsTest {
     @Test
     public void scanProductAndDisplayPrice() {
         String barcode = "found";
-        Price price = Price.euros(10);
+        Price price = Price.cents(1000);
         context.checking(new Expectations() {{
             allowing(productCatalog).find(barcode);
             will(returnValue(price));
@@ -35,7 +35,7 @@ public class SellMultipleItemsTest {
 
     @Test
     public void finishScanningAndDisplayTotalWithGst() {
-        Price grossPrice = Price.euros(10);
+        Price grossPrice = Price.cents(1000);
         Price netPrice = Price.euros(10, 50);
         context.checking(new Expectations() {{
             allowing(shoppingCart).getTotal();
