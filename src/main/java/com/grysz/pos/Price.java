@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 public class Price {
-    private static final int CENTS_IN_EUR = 100;
+    private static final BigDecimal CENTS_IN_EUR = BigDecimal.valueOf(100);
 
     public static Price euros(int euros) {
         return new Price(euros, 0);
@@ -17,7 +17,7 @@ public class Price {
     private final BigDecimal amount;
 
     private Price(int euros, int cents) {
-        amount = new BigDecimal(euros).add(new BigDecimal(cents).divide(new BigDecimal(CENTS_IN_EUR)));
+        amount = BigDecimal.valueOf(euros).add(BigDecimal.valueOf(cents).divide(CENTS_IN_EUR));
     }
 
     private Price(BigDecimal amount) {
