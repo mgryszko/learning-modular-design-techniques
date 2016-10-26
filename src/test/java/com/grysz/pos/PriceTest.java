@@ -21,6 +21,17 @@ public class PriceTest {
     }
 
     @Test
+    public void addPricesWithoutCentDecimals() {
+        assertThat(Price.cents(1).add(Price.cents(2)), equalTo(Price.cents(3)));
+    }
+
+    @Test
+    public void addPricesWithCentDecimals() {
+        assertThat(Price.cents(0.1).add(Price.cents(0.2)), equalTo(Price.cents(0.3)));
+        assertThat(Price.cents(0.15).add(Price.cents(0.25)), equalTo(Price.cents(0.5)));
+    }
+
+    @Test
     @Parameters({
         "   100 |    1.00 €",
         "   110 |    1.10 €",
