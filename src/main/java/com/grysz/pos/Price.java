@@ -7,7 +7,7 @@ public class Price {
     private static final int CENTS_IN_EUR = 100;
 
     public static Price euros(int euros) {
-        return Price.euros(euros, 0);
+        return new Price(euros, 0);
     }
 
     public static Price euros(int euros, int cents) {
@@ -17,11 +17,7 @@ public class Price {
     private final BigDecimal amount;
 
     private Price(int euros, int cents) {
-        this(euros * CENTS_IN_EUR + cents);
-    }
-
-    private Price(int cents) {
-        amount = new BigDecimal(cents).divide(new BigDecimal(100));
+        amount = new BigDecimal(euros).add(new BigDecimal(cents).divide(new BigDecimal(CENTS_IN_EUR)));
     }
 
     private Price(BigDecimal amount) {
