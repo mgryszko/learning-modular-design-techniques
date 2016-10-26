@@ -11,14 +11,14 @@ import static org.junit.Assert.assertThat;
 @RunWith(JUnitParamsRunner.class)
 public class PriceTest {
     @Test
-    @Parameters({"   1 | 00 |     1.00 €",
-                 "   1 | 10 |     1.10 €",
-                 "   1 | 23 |     1.23 €",
-                 "  10 | 23 |    10.23 €",
-                 "   0 | 12 |     0.12 €",
-                 "1000 |  1 |  1000.01 €"})
-    public void stringRepresentation(int euros, int cents, String formattedPrice) {
-        Price price = Price.euros(euros, cents);
+    @Parameters({"   100 |    1.00 €",
+                 "   110 |    1.10 €",
+                 "   123 |    1.23 €",
+                 "  1023 |   10.23 €",
+                 "    12 |    0.12 €",
+                 "100001 | 1000.01 €"})
+    public void stringRepresentation(int cents, String formattedPrice) {
+        Price price = Price.cents(cents);
         assertThat(price.toString(), equalTo(formattedPrice));
     }
 }

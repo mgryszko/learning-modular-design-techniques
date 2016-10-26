@@ -18,9 +18,9 @@ public abstract class ShoppingCartContractTest {
         ShoppingCart cart = createShoppingCartWithProducts();
         Price initialTotal = cart.getTotal();
 
-        cart.put(Price.euros(10, 11));
+        cart.put(Price.cents(1011));
 
-        assertThat(cart.getTotal(), equalTo(initialTotal.add(Price.euros(10, 11))));
+        assertThat(cart.getTotal(), equalTo(initialTotal.add(Price.cents(1011))));
     }
 
     protected abstract ShoppingCart createEmptyShoppingCart();

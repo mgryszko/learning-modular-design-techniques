@@ -21,7 +21,7 @@ public class ConsoleDisplayTest {
             oneOf(console).println("total: 10.13 €");
         }});
 
-        display.displayTotal(Price.euros(10, 13));
+        display.displayTotal(Price.cents(1013));
     }
 
     @Test

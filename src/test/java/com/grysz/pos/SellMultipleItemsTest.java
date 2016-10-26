@@ -36,7 +36,7 @@ public class SellMultipleItemsTest {
     @Test
     public void finishScanningAndDisplayTotalWithGst() {
         Price grossPrice = Price.cents(1000);
-        Price netPrice = Price.euros(10, 50);
+        Price netPrice = Price.cents(1050);
         context.checking(new Expectations() {{
             allowing(shoppingCart).getTotal();
             will(returnValue(grossPrice));

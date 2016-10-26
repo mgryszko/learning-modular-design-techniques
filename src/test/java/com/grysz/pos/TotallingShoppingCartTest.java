@@ -7,7 +7,7 @@ public class TotallingShoppingCartTest extends ShoppingCartContractTest {
 
     protected ShoppingCart createShoppingCartWithProducts() {
         ShoppingCart cart = createEmptyShoppingCart();
-        cart.put(Price.euros(5, 1));
+        cart.put(Price.cents(501));
         return cart;
     }
 }
