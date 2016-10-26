@@ -11,21 +11,23 @@ import static org.junit.Assert.assertThat;
 @RunWith(JUnitParamsRunner.class)
 public class PriceTest {
     @Test
-    @Parameters({"1010 | 50.5",
-                 "1009 | 50.5",
-                 "1008 | 50.4",
-                 "1007 | 50.4"})
+    @Parameters({
+        "1010 | 50.5",
+        "1009 | 50.5",
+        "1008 | 50.4",
+        "1007 | 50.4"})
     public void isRoundedUpWhenMultiplyingByPercentage(int cents, double percentCents) {
         assertThat(Price.cents(cents).percent(5), equalTo(Price.cents(percentCents)));
     }
 
     @Test
-    @Parameters({"   100 |    1.00 €",
-                 "   110 |    1.10 €",
-                 "   123 |    1.23 €",
-                 "  1023 |   10.23 €",
-                 "    12 |    0.12 €",
-                 "100001 | 1000.01 €"})
+    @Parameters({
+        "   100 |    1.00 €",
+        "   110 |    1.10 €",
+        "   123 |    1.23 €",
+        "  1023 |   10.23 €",
+        "    12 |    0.12 €",
+        "100001 | 1000.01 €"})
     public void stringRepresentation(int cents, String formattedPrice) {
         Price price = Price.cents(cents);
         assertThat(price.toString(), equalTo(formattedPrice));
