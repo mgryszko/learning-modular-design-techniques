@@ -1,9 +1,7 @@
 package com.grysz.pos;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.text.DecimalFormat;
-import java.util.Objects;
 
 public class Price {
     private static final int CENTS_IN_EUR = 100;
@@ -16,35 +14,42 @@ public class Price {
         return new Price(euros, cents);
     }
 
-    private final int valueInCents;
+    private final BigDecimal amount;
 
     private Price(int euros, int cents) {
-        valueInCents = euros * CENTS_IN_EUR + cents;
+        this(euros * CENTS_IN_EUR + cents);
+    }
+
+    private Price(int cents) {
+        amount = new BigDecimal(cents).divide(new BigDecimal(100));
+    }
+
+    private Price(BigDecimal amount) {
+        this.amount = new BigDecimal(String.valueOf(amount));
     }
 
     public Price add(Price that) {
-        return Price.euros(0, this.valueInCents + that.valueInCents);
+        return new Price(this.amount.add(that.amount));
     }
 
     @Override
     public String toString() {
-        BigDecimal valueToFormat = new BigDecimal(BigInteger.valueOf(valueInCents), 2);
-        return new DecimalFormat("#####.00 €").format(valueToFormat);
+        return new DecimalFormat("#####.00 €").format(amount);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        return valueInCents == ((Price) o).valueInCents;
+        return amount.toPlainString().equals(((Price) o).amount.toPlainString());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(valueInCents);
+        return amount.hashCode();
     }
 
     public Price percent(int percent) {
-        return Price.euros(0, valueInCents * percent / 100);
+        return new Price(amount.multiply(BigDecimal.valueOf(percent)).divide(BigDecimal.valueOf(100)));
     }
 }
