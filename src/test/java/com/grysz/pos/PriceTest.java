@@ -26,9 +26,11 @@ public class PriceTest {
     }
 
     @Test
-    public void addPricesWithCentDecimals() {
-        assertThat(Price.cents(0.1).add(Price.cents(0.2)), equalTo(Price.cents(0.3)));
-        assertThat(Price.cents(0.15).add(Price.cents(0.25)), equalTo(Price.cents(0.5)));
+    @Parameters({
+        "0.1  | 0.2  | 0.3",
+        "0.15 | 0.25 | 0.5"})
+    public void addPricesWithCentDecimals(double addend, double augend, double sum) {
+        assertThat(Price.cents(addend).add(Price.cents(augend)), equalTo(Price.cents(sum)));
     }
 
     @Test
@@ -37,11 +39,9 @@ public class PriceTest {
     }
 
     @Test
-    public void equalityWithCentDecimals() {
-        assertThat(Price.cents(0.05), equalTo(Price.cents(0.1)));
-        assertThat(Price.cents(0.09), equalTo(Price.cents(0.1)));
-        assertThat(Price.cents(0.11), equalTo(Price.cents(0.1)));
-        assertThat(Price.cents(0.14), equalTo(Price.cents(0.1)));
+    @Parameters({"0.05", "0.09", "0.11", "0.14"})
+    public void equalityWithCentDecimals(double cents) {
+        assertThat(Price.cents(cents), equalTo(Price.cents(0.1)));
     }
 
     @Test
