@@ -28,6 +28,10 @@ public class Price {
         return new Price(this.amount.add(that.amount));
     }
 
+    public Price percent(int percent) {
+        return new Price(amount.multiply(BigDecimal.valueOf(percent)).divide(BigDecimal.valueOf(100)));
+    }
+
     @Override
     public String toString() {
         return new DecimalFormat("####0.00 €").format(amount);
@@ -43,9 +47,5 @@ public class Price {
     @Override
     public int hashCode() {
         return amount.hashCode();
-    }
-
-    public Price percent(int percent) {
-        return new Price(amount.multiply(BigDecimal.valueOf(percent)).divide(BigDecimal.valueOf(100)));
     }
 }
