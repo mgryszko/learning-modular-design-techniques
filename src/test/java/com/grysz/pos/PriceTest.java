@@ -32,6 +32,19 @@ public class PriceTest {
     }
 
     @Test
+    public void equalityWithoutCentDecimals() {
+        assertThat(Price.cents(123), equalTo(Price.cents(123)));
+    }
+
+    @Test
+    public void equalityWithCentDecimals() {
+        assertThat(Price.cents(0.05), equalTo(Price.cents(0.1)));
+        assertThat(Price.cents(0.09), equalTo(Price.cents(0.1)));
+        assertThat(Price.cents(0.11), equalTo(Price.cents(0.1)));
+        assertThat(Price.cents(0.14), equalTo(Price.cents(0.1)));
+    }
+
+    @Test
     @Parameters({
         "   100 |    1.00 €",
         "   110 |    1.10 €",
