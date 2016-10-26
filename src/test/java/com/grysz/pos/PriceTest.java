@@ -28,8 +28,8 @@ public class PriceTest {
         "  1023 |   10.23 €",
         "    12 |    0.12 €",
         "100001 | 1000.01 €"})
-    public void stringRepresentation(int cents, String formattedPrice) {
+    public void moneyRepresentation(int cents, String formattedPrice) {
         Price price = Price.cents(cents);
-        assertThat(price.toString(), equalTo(formattedPrice));
+        assertThat(price.toCurrencyString(), equalTo(formattedPrice));
     }
 }

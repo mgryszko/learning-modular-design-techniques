@@ -23,7 +23,7 @@ public class ConsoleDisplay implements Display {
     }
 
     private String formatTotal(Price total) {
-        return String.format("total: %s", total);
+        return String.format("total: %s", total.toCurrencyString());
     }
 
     private String formatPriceNotFound(String barcode) {

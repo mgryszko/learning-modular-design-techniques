@@ -33,9 +33,13 @@ public class Price {
         return new Price(amount.multiply(percentAsDecimal));
     }
 
+    public String toCurrencyString() {
+        return new DecimalFormat("####0.00 €").format(amount);
+    }
+
     @Override
     public String toString() {
-        return new DecimalFormat("####0.00 €").format(amount);
+        return amount.toPlainString();
     }
 
     @Override
