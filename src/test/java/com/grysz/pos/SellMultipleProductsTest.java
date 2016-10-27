@@ -5,7 +5,7 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
 import org.junit.Test;
 
-public class SellMultipleItemsTest {
+public class SellMultipleProductsTest {
     @Test
     public void scanProductAndDisplayPrice() {
         String barcode = "found";
@@ -31,20 +31,6 @@ public class SellMultipleItemsTest {
         }});
 
         pos.productScanned(barcode);
-    }
-
-    @Test
-    public void finishScanningAndDisplayTotalWithGst() {
-        Price grossPrice = Price.cents(1000);
-        Price netPrice = Price.cents(1050);
-        context.checking(new Expectations() {{
-            allowing(shoppingCart).getTotal();
-            will(returnValue(grossPrice));
-
-            oneOf(display).displayTotal(netPrice);
-        }});
-
-        pos.done();
     }
 
     @Rule
