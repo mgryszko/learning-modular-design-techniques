@@ -7,9 +7,19 @@ import org.junit.Test;
 
 public class ConsoleDisplayTest {
     @Test
+    public void priceNotFoundForBarcode() {
+        String barcode = "not-found";
+        context.checking(new Expectations() {{
+            oneOf(console).println("not found: not-found");
+        }});
+
+        display.displayPriceNotFound(barcode);
+    }
+
+    @Test
     public void formattedTotal() {
         context.checking(new Expectations() {{
-            oneOf(console).println("total: 10.00 €"); 
+            oneOf(console).println("total: 10.00 €");
         }});
 
         display.displayTotal(Price.cents(1000));
@@ -22,16 +32,6 @@ public class ConsoleDisplayTest {
         }});
 
         display.displayTotal(Price.cents(1013));
-    }
-
-    @Test
-    public void priceNotFoundForBarcode() {
-        String barcode = "not-found";
-        context.checking(new Expectations() {{
-            oneOf(console).println("not found: not-found");
-        }});
-
-        display.displayPriceNotFound(barcode);
     }
 
     @Rule

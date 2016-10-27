@@ -8,8 +8,8 @@ public class ConsoleDisplay implements Display {
     }
 
     @Override
-    public void displayTotal(Price total) {
-        console.println(formatTotal(total));
+    public void displayProductPrice(Price price) {
+        throw new RuntimeException("not implemented yet");
     }
 
     @Override
@@ -18,8 +18,8 @@ public class ConsoleDisplay implements Display {
     }
 
     @Override
-    public void displayProductPrice(Price price) {
-        throw new RuntimeException("not implemented yet");
+    public void displayTotal(Price total) {
+        console.println(formatTotal(total));
     }
 
     private String formatTotal(Price total) {
