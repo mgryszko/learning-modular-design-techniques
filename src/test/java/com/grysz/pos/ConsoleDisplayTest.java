@@ -12,8 +12,8 @@ import org.junit.runner.RunWith;
 public class ConsoleDisplayTest {
     @Test
     @Parameters({
-        "1000 | 10.00 €",
-        "1013 | 10.13 €"
+        "1000 | 10.00 € G",
+        "1013 | 10.13 € G"
     })
     public void formattedProductPrice(int cents, String formattedPrice) {
         context.checking(new Expectations() {{
