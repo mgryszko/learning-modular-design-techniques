@@ -18,7 +18,7 @@ public class SellMultipleProductsTest {
             oneOf(display).displayProductPrice(price);
         }});
 
-        pos.productScanned(barcode);
+        sellProducts.productScanned(barcode);
     }
 
     @Test
@@ -30,7 +30,7 @@ public class SellMultipleProductsTest {
             oneOf(display).displayPriceNotFound("not-found");
         }});
 
-        pos.productScanned(barcode);
+        sellProducts.productScanned(barcode);
     }
 
     @Rule
@@ -39,5 +39,5 @@ public class SellMultipleProductsTest {
     private Display display = context.mock(Display.class);
     private ProductCatalog productCatalog = context.mock(ProductCatalog.class);
     private ShoppingCart shoppingCart = context.mock(ShoppingCart.class);
-    private Pos pos = new Pos(productCatalog, shoppingCart, display);
+    private SellProducts sellProducts = new SellProducts(productCatalog, shoppingCart, display);
 }

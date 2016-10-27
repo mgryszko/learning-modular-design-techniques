@@ -17,7 +17,7 @@ public class FinishSaleTest {
             oneOf(display).displayTotal(netPrice);
         }});
 
-        pos.done();
+        finishSale.done();
     }
 
     @Rule
@@ -25,5 +25,5 @@ public class FinishSaleTest {
 
     private Display display = context.mock(Display.class);
     private ShoppingCart shoppingCart = context.mock(ShoppingCart.class);
-    private Pos pos = new Pos(null, shoppingCart, display);
+    private FinishSale finishSale = new FinishSale(shoppingCart, display);
 }
