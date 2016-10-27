@@ -5,7 +5,7 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
 import org.junit.Test;
 
-public class SellMultipleProductsTest {
+public class SellProductsTest {
     @Test
     public void scanProductAndDisplayPrice() {
         String barcode = "found";
