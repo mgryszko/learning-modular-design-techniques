@@ -15,15 +15,15 @@ public abstract class ShoppingCartContractTest {
 
     @Test
     public void afterPuttingProductTotalIsIncremented() {
-        ShoppingCart cart = createShoppingCartWithProducts();
-        Price initialTotal = cart.getTotal();
+        Price initialTotal = Price.cents(501);
+        ShoppingCart cart = createShoppingCartWithTotalAt(initialTotal);
 
         cart.put(Price.cents(1011));
 
-        assertThat(cart.getTotal(), equalTo(initialTotal.add(Price.cents(1011))));
+        assertThat(cart.getTotal(), equalTo(Price.cents(1512)));
     }
 
     protected abstract ShoppingCart createEmptyShoppingCart();
 
-    protected abstract ShoppingCart createShoppingCartWithProducts();
+    protected abstract ShoppingCart createShoppingCartWithTotalAt(Price total);
 }

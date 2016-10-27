@@ -1,13 +1,15 @@
 package com.grysz.pos;
 
 public class TotallingShoppingCartTest extends ShoppingCartContractTest {
+    @Override
     protected ShoppingCart createEmptyShoppingCart() {
         return new TotallingShoppingCart();
     }
 
-    protected ShoppingCart createShoppingCartWithProducts() {
+    @Override
+    protected ShoppingCart createShoppingCartWithTotalAt(Price total) {
         ShoppingCart cart = createEmptyShoppingCart();
-        cart.put(Price.cents(501));
+        cart.put(total);
         return cart;
     }
 }
