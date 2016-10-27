@@ -9,7 +9,7 @@ public class ConsoleDisplay implements Display {
 
     @Override
     public void displayProductPrice(Price price) {
-        throw new RuntimeException("not implemented yet");
+        console.println(formatProductPrice(price));
     }
 
     @Override
@@ -22,11 +22,15 @@ public class ConsoleDisplay implements Display {
         console.println(formatTotal(total));
     }
 
-    private String formatTotal(Price total) {
-        return String.format("total: %s", total.toCurrencyString());
+    private String formatProductPrice(Price price) {
+        return String.format("%s", price.toCurrencyString());
     }
 
     private String formatPriceNotFound(String barcode) {
         return String.format("not found: %s", barcode);
+    }
+
+    private String formatTotal(Price total) {
+        return String.format("total: %s", total.toCurrencyString());
     }
 }

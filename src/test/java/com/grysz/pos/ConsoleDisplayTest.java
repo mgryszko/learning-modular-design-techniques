@@ -1,11 +1,28 @@
 package com.grysz.pos;
 
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import org.jmock.Expectations;
 import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
+@RunWith(JUnitParamsRunner.class)
 public class ConsoleDisplayTest {
+    @Test
+    @Parameters({
+        "1000 | 10.00 €",
+        "1013 | 10.13 €"
+    })
+    public void formattedProductPrice(int cents, String formattedPrice) {
+        context.checking(new Expectations() {{
+            oneOf(console).println(formattedPrice);
+        }});
+
+        display.displayProductPrice(Price.cents(cents));
+    }
+
     @Test
     public void priceNotFoundForBarcode() {
         String barcode = "not-found";
