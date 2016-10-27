@@ -6,4 +6,6 @@ public interface Display {
     void displayPriceNotFound(String notFound);
 
     void displayTotal(Price total);
+
+    void displayProductPrice(Price price, boolean pstLevied);
 }

@@ -7,15 +7,30 @@ import org.junit.Test;
 
 public class SellProductsTest {
     @Test
-    public void scanProductAndDisplayPrice() {
+    public void scanProductAndDisplayPriceWithoutPst() {
         String barcode = "found";
         Price price = Price.cents(1000);
         context.checking(new Expectations() {{
             allowing(productCatalog).find(barcode);
             will(returnValue(price));
 
+            oneOf(display).displayProductPrice(price, false);
             oneOf(shoppingCart).put(price);
-            oneOf(display).displayProductPrice(price);
+        }});
+
+        sellProducts.productScanned(barcode);
+    }
+
+    @Test
+    public void scanProductAndDisplayPriceWithPst() {
+        String barcode = "found-with-pst";
+        Price price = Price.cents(1000);
+        context.checking(new Expectations() {{
+            allowing(productCatalog).find(barcode);
+            will(returnValue(price));
+
+            oneOf(display).displayProductPrice(price, true);
+            oneOf(shoppingCart).put(price);
         }});
 
         sellProducts.productScanned(barcode);

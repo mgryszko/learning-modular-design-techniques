@@ -16,7 +16,11 @@ public class SellProducts {
         if (price == null) {
             display.displayPriceNotFound(barcode);
         } else {
-            display.displayProductPrice(price);
+            if (barcode.equals("found-with-pst")) {
+                display.displayProductPrice(price, true);
+            } else {
+                display.displayProductPrice(price, false);
+            }
             shoppingCart.put(price);
         }
     }
