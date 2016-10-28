@@ -46,5 +46,5 @@ public class ConsoleDisplayTest {
     public JUnitRuleMockery context = new JUnitRuleMockery();
     
     private Console console = context.mock(Console.class);
-    private ConsoleDisplay display = new ConsoleDisplay(console);
+    private Display display = new ConsoleDisplay(console);
 }
