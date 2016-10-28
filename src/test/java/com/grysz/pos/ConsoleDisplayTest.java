@@ -42,15 +42,6 @@ public class ConsoleDisplayTest {
         display.displayTotal(Price.cents(1000));
     }
 
-    @Test
-    public void formattedTotalWithDecimals() {
-        context.checking(new Expectations() {{
-            oneOf(console).println("total: 10.13 €");
-        }});
-
-        display.displayTotal(Price.cents(1013));
-    }
-
     @Rule
     public JUnitRuleMockery context = new JUnitRuleMockery();
     
