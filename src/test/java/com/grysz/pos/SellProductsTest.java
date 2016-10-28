@@ -5,31 +5,19 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.util.Optional;
+
 public class SellProductsTest {
     @Test
     public void scanProductAndDisplayPriceWithoutPst() {
         String barcode = "found";
         Price price = Price.cents(1000);
+        Product product = new Product(price, false);
         context.checking(new Expectations() {{
-            allowing(productCatalog).find(barcode);
-            will(returnValue(price));
+            allowing(productCatalog).findProduct(barcode);
+            will(returnValue(Optional.of(product)));
 
-            oneOf(display).displayProductPrice(price, false);
-            oneOf(shoppingCart).put(price);
-        }});
-
-        sellProducts.productScanned(barcode);
-    }
-
-    @Test
-    public void scanProductAndDisplayPriceWithPst() {
-        String barcode = "found-with-pst";
-        Price price = Price.cents(1000);
-        context.checking(new Expectations() {{
-            allowing(productCatalog).find(barcode);
-            will(returnValue(price));
-
-            oneOf(display).displayProductPrice(price, true);
+            oneOf(display).displayProductPrice(product);
             oneOf(shoppingCart).put(price);
         }});
 
@@ -40,8 +28,8 @@ public class SellProductsTest {
     public void scanProductAndDisplayPriceNotFound() {
         String barcode = "not-found";
         context.checking(new Expectations() {{
-            allowing(productCatalog).find(barcode);
-            will(returnValue(null));
+            allowing(productCatalog).findProduct(barcode);
+            will(returnValue(Optional.empty()));
             oneOf(display).displayPriceNotFound("not-found");
         }});
 

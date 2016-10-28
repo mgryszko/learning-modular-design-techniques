@@ -1,5 +1,7 @@
 package com.grysz.pos;
 
+import java.util.Optional;
+
 public class SellProducts {
     private final ProductCatalog productCatalog;
     private final ShoppingCart shoppingCart;
@@ -12,16 +14,12 @@ public class SellProducts {
     }
 
     public void productScanned(String barcode) {
-        Price price = productCatalog.find(barcode);
-        if (price == null) {
-            display.displayPriceNotFound(barcode);
+        Optional<Product> product = productCatalog.findProduct(barcode);
+        if (product.isPresent()) {
+            display.displayProductPrice(product.get());
+            shoppingCart.put(product.get().getPrice());
         } else {
-            if (barcode.equals("found-with-pst")) {
-                display.displayProductPrice(price, true);
-            } else {
-                display.displayProductPrice(price, false);
-            }
-            shoppingCart.put(price);
+            display.displayPriceNotFound(barcode);
         }
     }
 }

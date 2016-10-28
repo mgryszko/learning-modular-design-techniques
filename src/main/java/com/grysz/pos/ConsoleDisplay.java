@@ -18,6 +18,11 @@ public class ConsoleDisplay implements Display {
     }
 
     @Override
+    public void displayProductPrice(Product product) {
+        throw new RuntimeException("not yet implemented");
+    }
+
+    @Override
     public void displayPriceNotFound(String barcode) {
         console.println(formatPriceNotFound(barcode));
     }
