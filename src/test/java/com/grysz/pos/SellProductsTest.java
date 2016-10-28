@@ -12,7 +12,8 @@ public class SellProductsTest {
     public void scanProductAndDisplayPriceWithoutPst() {
         String barcode = "found";
         Price price = Price.cents(1000);
-        Product product = new Product(price, false);
+        boolean anyPstLevied = false;
+        Product product = new Product(price, anyPstLevied);
         context.checking(new Expectations() {{
             allowing(productCatalog).findProduct(barcode);
             will(returnValue(Optional.of(product)));
