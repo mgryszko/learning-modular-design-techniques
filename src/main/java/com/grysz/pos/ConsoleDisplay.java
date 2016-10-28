@@ -8,13 +8,8 @@ public class ConsoleDisplay implements Display {
     }
 
     @Override
-    public void displayProductPrice(Price price) {
-        console.println(formatProductPrice(price));
-    }
-
-    @Override
     public void displayProductPrice(Product product) {
-        throw new RuntimeException("not yet implemented");
+        console.println(formatProductPrice(product));
     }
 
     @Override
@@ -27,8 +22,14 @@ public class ConsoleDisplay implements Display {
         console.println(formatTotal(total));
     }
 
-    private String formatProductPrice(Price price) {
-        return String.format("%s G", price.toCurrencyString());
+    private String formatProductPrice(Product product) {
+        return String.format("%s %s", product.formatPrice(), formatTaxCode(product));
+    }
+
+    private String formatTaxCode(Product product) {
+        String gstCode = "G";
+        String pstCode = product.isPstLevied() ? "P" : "";
+        return gstCode + pstCode;
     }
 
     private String formatPriceNotFound(String barcode) {

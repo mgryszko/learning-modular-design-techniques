@@ -9,7 +9,15 @@ public class Product {
         this.pstLevied = pstLevied;
     }
 
+    public String formatPrice() {
+        return price.toCurrencyString();
+    }
+
     public Price getPrice() {
         return price;
+    }
+
+    public boolean isPstLevied() {
+        return pstLevied;
     }
 }

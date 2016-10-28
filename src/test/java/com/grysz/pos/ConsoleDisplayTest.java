@@ -12,15 +12,15 @@ import org.junit.runner.RunWith;
 public class ConsoleDisplayTest {
     @Test
     @Parameters({
-        "1000 | 10.00 € G",
-        "1013 | 10.13 € G"
+        "1013 | false | 10.13 € G",
+        "1013 | true  | 10.13 € GP"
     })
-    public void formattedProductPrice(int cents, String formattedPrice) {
+    public void formattedProductPrice(int cents, boolean pstLevied, String formattedPrice) {
         context.checking(new Expectations() {{
             oneOf(console).println(formattedPrice);
         }});
 
-        display.displayProductPrice(Price.cents(cents));
+        display.displayProductPrice(new Product(Price.cents(cents), pstLevied));
     }
 
     @Test
