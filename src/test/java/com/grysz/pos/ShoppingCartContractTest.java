@@ -18,7 +18,7 @@ public abstract class ShoppingCartContractTest {
         Price initialTotal = Price.cents(501);
         ShoppingCart cart = createShoppingCartWithTotalAt(initialTotal);
 
-        cart.put(Price.cents(1011));
+        cart.put(new Product(Price.cents(1011), false));
 
         assertThat(cart.getTotal(), equalTo(Price.cents(1512)));
     }

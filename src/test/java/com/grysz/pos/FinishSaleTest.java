@@ -8,13 +8,12 @@ import org.junit.Test;
 public class FinishSaleTest {
     @Test
     public void finishScanningAndDisplayTotalWithGst() {
-        Price grossPrice = Price.cents(1000);
-        Price netPrice = Price.cents(1050);
+        Price price = Price.cents(1000);
         context.checking(new Expectations() {{
-            allowing(shoppingCart).getTotal();
-            will(returnValue(grossPrice));
+            allowing(shoppingCart).getTotalWithTaxes();
+            will(returnValue(price));
 
-            oneOf(display).displayTotal(netPrice);
+            oneOf(display).displayTotal(price);
         }});
 
         finishSale.done();
