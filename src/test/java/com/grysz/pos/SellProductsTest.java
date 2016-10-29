@@ -9,11 +9,10 @@ import java.util.Optional;
 
 public class SellProductsTest {
     @Test
-    public void scanProductAndDisplayPriceWithoutPst() {
+    public void scanProductAndDisplayPrice() {
         String barcode = "found";
         Price price = Price.cents(1000);
-        boolean anyPstLevied = false;
-        Product product = new Product(price, anyPstLevied);
+        Product product = productPricedAt(price);
         context.checking(new Expectations() {{
             allowing(productCatalog).findProduct(barcode);
             will(returnValue(Optional.of(product)));
@@ -44,4 +43,9 @@ public class SellProductsTest {
     private ProductCatalog productCatalog = context.mock(ProductCatalog.class);
     private ShoppingCart shoppingCart = context.mock(ShoppingCart.class);
     private SellProducts sellProducts = new SellProducts(productCatalog, shoppingCart, display);
+
+    private Product productPricedAt(Price price) {
+        boolean anyPstLevied = false;
+        return new Product(price, anyPstLevied);
+    }
 }
