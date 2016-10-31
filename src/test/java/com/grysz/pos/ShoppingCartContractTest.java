@@ -10,20 +10,25 @@ public abstract class ShoppingCartContractTest {
     public void initiallyIsEmpty() {
         ShoppingCart cart = createEmptyShoppingCart();
 
-        assertThat(cart.getTotal(), equalTo(Price.cents(0)));
+        assertThat(cart.getTotalWithTaxes(), equalTo(Price.cents(0)));
     }
 
     @Test
-    public void afterPuttingProductTotalIsIncremented() {
-        Price initialTotal = Price.cents(501);
-        ShoppingCart cart = createShoppingCartWithTotalAt(initialTotal);
+    public void afterPuttingProductTotalWithTaxesIsIncremented() {
+        ShoppingCart cart = createEmptyShoppingCart();
+        Product productWithoutPst = new Product(Price.cents(500), false);
 
-        cart.put(new Product(Price.cents(1011), false));
+        cart.put(productWithoutPst);
 
-        assertThat(cart.getTotal(), equalTo(Price.cents(1512)));
+        Price productWithoutPstNet = Price.cents(525);
+        assertThat(cart.getTotalWithTaxes(), equalTo(productWithoutPstNet ));
+
+        Product productWithPst = new Product(Price.cents(600), true);
+        Price productWithPstNet = Price.cents(678);
+        cart.put(productWithPst);
+
+        assertThat(cart.getTotalWithTaxes(), equalTo(productWithoutPstNet.add(productWithPstNet)));
     }
 
     protected abstract ShoppingCart createEmptyShoppingCart();
-
-    protected abstract ShoppingCart createShoppingCartWithTotalAt(Price total);
 }
