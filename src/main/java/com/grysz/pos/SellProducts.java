@@ -17,7 +17,7 @@ public class SellProducts {
         Optional<Product> product = productCatalog.findProduct(barcode);
         if (product.isPresent()) {
             display.displayProductPrice(product.get());
-            shoppingCart.put(product.get().getPrice());
+            shoppingCart.put(product.get());
         } else {
             display.displayPriceNotFound(barcode);
         }

@@ -11,14 +11,13 @@ public class SellProductsTest {
     @Test
     public void scanProductAndDisplayPrice() {
         String barcode = "found";
-        Price price = Price.cents(1000);
-        Product product = productPricedAt(price);
+        Product product = anyProduct();
         context.checking(new Expectations() {{
             allowing(productCatalog).findProduct(barcode);
             will(returnValue(Optional.of(product)));
 
             oneOf(display).displayProductPrice(product);
-            oneOf(shoppingCart).put(price);
+            oneOf(shoppingCart).put(product);
         }});
 
         sellProducts.productScanned(barcode);
@@ -44,8 +43,9 @@ public class SellProductsTest {
     private ShoppingCart shoppingCart = context.mock(ShoppingCart.class);
     private SellProducts sellProducts = new SellProducts(productCatalog, shoppingCart, display);
 
-    private Product productPricedAt(Price price) {
+    private Product anyProduct() {
         boolean anyPstLevied = false;
-        return new Product(price, anyPstLevied);
+        Price anyPrice = Price.cents(1000);
+        return new Product(anyPrice, anyPstLevied);
     }
 }
