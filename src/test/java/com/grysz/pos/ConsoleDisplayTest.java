@@ -10,17 +10,21 @@ import org.junit.runner.RunWith;
 
 @RunWith(JUnitParamsRunner.class)
 public class ConsoleDisplayTest {
+    private Object[] products() {
+        return new Object[] {
+            new Object[] { new Product(Price.cents(1013), false), "10.13 € G" },
+            new Object[] { new Product(Price.cents(1013), true),  "10.13 € GP" }
+        };
+    }
+
     @Test
-    @Parameters({
-        "1013 | false | 10.13 € G",
-        "1013 | true  | 10.13 € GP"
-    })
-    public void formattedProductPrice(int cents, boolean pstLevied, String formattedPrice) {
+    @Parameters(method = "products")
+    public void formattedProductPrice(Product product, String formattedPrice) {
         context.checking(new Expectations() {{
             oneOf(console).println(formattedPrice);
         }});
 
-        display.displayProductPrice(new Product(Price.cents(cents), pstLevied));
+        display.displayProductPrice(product);
     }
 
     @Test
