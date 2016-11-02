@@ -2,6 +2,8 @@ package com.grysz.pos;
 
 import org.junit.Test;
 
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
@@ -10,24 +12,20 @@ public abstract class ShoppingCartContractTest {
     public void initiallyIsEmpty() {
         ShoppingCart cart = createEmptyShoppingCart();
 
-        assertThat(cart.getTotalWithTaxes(), equalTo(Price.cents(0)));
+        assertThat(cart.getProducts(), empty());
     }
 
     @Test
-    public void afterPuttingProductTotalWithTaxesIsIncremented() {
+    public void afterPuttingProduct() {
         ShoppingCart cart = createEmptyShoppingCart();
-        Product productWithoutPst = new Product(Price.cents(500), false);
+        Product product = new Product(Price.cents(500), false);
 
-        cart.put(productWithoutPst);
+        cart.put(product);
+        cart.put(product);
 
-        Price productWithoutPstNet = Price.cents(525);
-        assertThat(cart.getTotalWithTaxes(), equalTo(productWithoutPstNet ));
+        // TODO finish this test
 
-        Product productWithPst = new Product(Price.cents(600), true);
-        Price productWithPstNet = Price.cents(678);
-        cart.put(productWithPst);
-
-        assertThat(cart.getTotalWithTaxes(), equalTo(productWithoutPstNet.add(productWithPstNet)));
+        assertThat(cart.getProducts(),  containsInAnyOrder(product, product));
     }
 
     protected abstract ShoppingCart createEmptyShoppingCart();

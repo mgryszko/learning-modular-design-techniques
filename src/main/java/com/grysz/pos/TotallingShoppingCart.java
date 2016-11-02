@@ -3,6 +3,8 @@ package com.grysz.pos;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import static java.util.Collections.unmodifiableCollection;
+
 class TotallingShoppingCart implements ShoppingCart {
     private Collection<Product> products = new ArrayList<>();
 
@@ -12,9 +14,7 @@ class TotallingShoppingCart implements ShoppingCart {
     }
 
     @Override
-    public Price getTotalWithTaxes() {
-        return products.stream()
-                .map(Product::netPrice)
-                .reduce(Price.cents(0), Price::add);
+    public Collection<Product> getProducts() {
+        return unmodifiableCollection(products);
     }
 }

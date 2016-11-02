@@ -5,15 +5,24 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.util.Collection;
+
+import static java.util.Arrays.asList;
+
 public class FinishSaleTest {
+
     @Test
     public void finishScanningAndDisplayTotalWithGst() {
-        Price price = Price.cents(1000);
+        Price netPrice = Price.cents(1000);
+        Collection<Product> products = asList(new Product(Price.cents(500), false), new Product(Price.cents(600), true));
         context.checking(new Expectations() {{
-            allowing(shoppingCart).getTotalWithTaxes();
-            will(returnValue(price));
+            allowing(shoppingCart).getProducts();
+            will(returnValue(products));
 
-            oneOf(display).displayTotal(price);
+            allowing(taxCalculator).calcuteNetTotal(products);
+            will(returnValue(netPrice));
+
+            oneOf(display).displayTotal(netPrice);
         }});
 
         finishSale.done();
@@ -24,5 +33,6 @@ public class FinishSaleTest {
 
     private Display display = context.mock(Display.class);
     private ShoppingCart shoppingCart = context.mock(ShoppingCart.class);
-    private FinishSale finishSale = new FinishSale(shoppingCart, display);
+    private TaxCalculator taxCalculator = context.mock(TaxCalculator.class);
+    private FinishSale finishSale = new FinishSale(shoppingCart, display, taxCalculator);
 }
